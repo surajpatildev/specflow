@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "specflow",
-      "source": ".",
+      "source": "./",
       "description": "Spec-driven development workflow for AI agents. Plan features with structured requirements, designs, and tasks before writing code.",
       "version": "0.1.0",
       "homepage": "https://github.com/surajpatildev/specflow",
