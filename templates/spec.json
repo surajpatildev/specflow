@@ -1,0 +1,11 @@
+{
+  "feature_name": "{{FEATURE_NAME}}",
+  "description": "{{DESCRIPTION}}",
+  "created_at": "{{TIMESTAMP}}",
+  "updated_at": "{{TIMESTAMP}}",
+  "phase": "initialized",
+  "requirements": { "generated": false, "approved": false },
+  "design": { "generated": false, "approved": false },
+  "tasks": { "generated": false, "approved": false },
+  "branch": null
+}

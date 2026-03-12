@@ -1,0 +1,12 @@
+{
+  "name": "specflow",
+  "version": "0.1.0",
+  "description": "Spec-driven development workflow for AI agents. Plan features with structured requirements, designs, and tasks before writing code.",
+  "author": {
+    "name": "Suraj",
+    "email": "surajtammapatil@gmail.com"
+  },
+  "repository": "https://github.com/surajpatildev/specflow",
+  "license": "MIT",
+  "keywords": ["spec-driven", "requirements", "design", "planning", "workflow", "ai-dlc"]
+}
