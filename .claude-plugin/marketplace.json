@@ -1,0 +1,22 @@
+{
+  "name": "specflow",
+  "owner": {
+    "name": "Suraj",
+    "email": "surajtammapatil@gmail.com"
+  },
+  "metadata": {
+    "description": "Spec-driven development workflow for AI agents"
+  },
+  "plugins": [
+    {
+      "name": "specflow",
+      "source": ".",
+      "description": "Spec-driven development workflow for AI agents. Plan features with structured requirements, designs, and tasks before writing code.",
+      "version": "0.1.0",
+      "homepage": "https://github.com/surajpatildev/specflow",
+      "repository": "https://github.com/surajpatildev/specflow",
+      "license": "MIT",
+      "keywords": ["spec-driven", "requirements", "design", "planning", "workflow"]
+    }
+  ]
+}
