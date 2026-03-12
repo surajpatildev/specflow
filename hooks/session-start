@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Injects active specflow state into Claude's context on session start.
+# Silent when the project hasn't set up specflow — no noise.
+
+set -euo pipefail
+
+SPECS_DIR=".agents/specs"
+REF_DIR=".agents/reference"
+
+# JSON-safe escape for dynamic values (feature names, paths)
+esc() { local s="$1"; s="${s//\\/\\\\}"; s="${s//\"/\\\"}"; printf '%s' "$s"; }
+
+# --- detect project state ---
+
+ctx=""
+
+if [ -d "$SPECS_DIR" ]; then
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    d=$(esc "$(dirname "$f")")
+    if command -v jq &>/dev/null; then
+      n=$(esc "$(jq -r '.feature_name // "unknown"' "$f" 2>/dev/null)")
+      p=$(jq -r '.phase // "unknown"' "$f" 2>/dev/null)
+      ra=$(jq -r '.requirements.approved // false' "$f" 2>/dev/null)
+      da=$(jq -r '.design.approved // false' "$f" 2>/dev/null)
+      ta=$(jq -r '.tasks.approved // false' "$f" 2>/dev/null)
+    else
+      n=$(esc "$(basename "$(dirname "$f")")")
+      p="unknown"; ra="—"; da="—"; ta="—"
+    fi
+    ctx="${ctx}\n  ${n} [${p}] req:${ra} design:${da} tasks:${ta} (${d}/)"
+  done < <(find "$SPECS_DIR" -maxdepth 2 -name "spec.json" 2>/dev/null || true)
+fi
+
+has_ref=false
+[ -d "$REF_DIR" ] && [ -n "$(find "$REF_DIR" -maxdepth 1 -name '*.md' -print -quit 2>/dev/null)" ] && has_ref=true
+
+# --- emit or stay silent ---
+
+out=""
+if [ -n "$ctx" ]; then
+  out="<specflow-context>\nActive specs:${ctx}\n"
+  $has_ref && out="${out}\nSteering docs in .agents/reference/\n"
+  out="${out}Use /spec or /spec status to continue.\n</specflow-context>"
+elif $has_ref; then
+  out="<specflow-context>\nSteering docs in .agents/reference/. No active specs.\nUse /spec init to start a spec.\n</specflow-context>"
+fi
+
+# Nothing to inject → exit silently (plugin skills are already discoverable)
+[ -z "$out" ] && exit 0
+
+if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$out"
+else
+  printf '{"additional_context":"%s"}' "$out"
+fi

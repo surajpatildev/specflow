@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Context awareness nudge before compaction.
+# Spec work is research-heavy — when context fills up, the user needs to
+# know where things stand so they can pick up cleanly after compaction.
+
+set -euo pipefail
+
+[ ! -d ".agents/specs" ] && exit 0
+
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  if command -v jq &>/dev/null; then
+    phase=$(jq -r '.phase // ""' "$f" 2>/dev/null)
+    name=$(jq -r '.feature_name // "unknown"' "$f" 2>/dev/null)
+  else
+    phase=$(grep -o '"phase"[[:space:]]*:[[:space:]]*"[^"]*"' "$f" 2>/dev/null \
+      | head -1 | sed 's/.*"\([^"]*\)"$/\1/')
+    name=$(basename "$(dirname "$f")")
+  fi
+
+  # Only nudge during active spec phases (covers all non-complete states)
+  case "${phase:-}" in
+    initialized|requirements*|design*|tasks*|in-progress)
+      name="${name//\\/\\\\}"; name="${name//\"/\\\"}"
+      msg="<specflow-reminder>\nContext is being compacted. Spec ${name} is in ${phase} phase.\nAfter compaction, use /spec status to recover context and continue.\n</specflow-reminder>"
+      if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+        printf '{"hookSpecificOutput":{"hookEventName":"PreCompact","additionalContext":"%s"}}' "$msg"
+      else
+        printf '{"additional_context":"%s"}' "$msg"
+      fi
+      exit 0
+      ;;
+  esac
+done < <(find ".agents/specs" -maxdepth 2 -name "spec.json" 2>/dev/null || true)
+
+exit 0

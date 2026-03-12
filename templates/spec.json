@@ -1,8 +1,8 @@
 {
   "feature_name": "{{FEATURE_NAME}}",
   "description": "{{DESCRIPTION}}",
-  "created_at": "{{TIMESTAMP}}",
-  "updated_at": "{{TIMESTAMP}}",
+  "created_at": "{{DATE}}",
+  "updated_at": "{{DATE}}",
   "phase": "initialized",
   "requirements": { "generated": false, "approved": false },
   "design": { "generated": false, "approved": false },
