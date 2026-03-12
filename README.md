@@ -8,19 +8,15 @@ Works with any project. Any language. Any framework.
 
 ## Why SpecFlow
 
-AI coding assistants are powerful, but they work best when given clear direction. Without structure, complex features tend to drift. Requirements get missed, designs contradict existing patterns, and implementation touches files it shouldn't.
+AI coding assistants work best with clear direction. Without structure, features drift, requirements get missed, and implementation touches files it shouldn't. SpecFlow gives your AI agent a **repeatable planning workflow** that produces better code.
 
-SpecFlow solves this by giving your AI agent a **repeatable planning workflow** that produces better code:
-
-**Research-first.** Explores your codebase and the web before asking questions. When it does ask, the questions are grounded in what it actually found, not generic checklists.
-
-**Persistent state.** Specs survive conversation clearing, context compaction, and session restarts. Pick up exactly where you left off.
-
-**Approval gates.** Requirements need sign-off before design. Design needs sign-off before tasks. Nothing gets implemented until you say so.
-
-**Full traceability.** Every task traces back to a design component, which traces back to a requirement. Nothing gets lost.
-
-**Context-aware.** Learns your project's architecture, patterns, and conventions through steering docs, then applies them consistently across every feature.
+| Feature | |
+|:--|:--|
+| **Research-first** | Explores your codebase and the web before asking questions. Grounded in what it found, not generic checklists. |
+| **Persistent state** | Specs survive context compaction and session restarts. Pick up exactly where you left off. |
+| **Approval gates** | Requirements need sign-off before design. Design before tasks. Nothing ships without your OK. |
+| **Full traceability** | Every task traces to a design component, which traces to a requirement. Nothing gets lost. |
+| **Context-aware** | Learns your architecture and conventions through steering docs. Applies them consistently. |
 
 ---
 
