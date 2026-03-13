@@ -1,9 +1,16 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v[0-9]*'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 concurrency:
   group: release
@@ -22,26 +29,50 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Extract and validate version
+      - name: Compute next version
         id: version
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+'; then
-            echo "::error::Tag $GITHUB_REF_NAME is not a valid semver version"
-            exit 1
+          LATEST=$(git tag --sort=-v:refname --list 'v[0-9]*' | head -1)
+          if [ -z "$LATEST" ]; then
+            CURRENT="0.0.0"
+          else
+            CURRENT="${LATEST#v}"
           fi
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+
+          case "${{ inputs.bump }}" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+
+          NEXT="${MAJOR}.${MINOR}.${PATCH}"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "tag=v${NEXT}" >> "$GITHUB_OUTPUT"
+          echo "Bumping $CURRENT -> $NEXT (${{ inputs.bump }})"
 
       - name: Update version in plugin manifests
         run: |
-          V="${{ steps.version.outputs.version }}"
+          V="${{ steps.version.outputs.next }}"
           jq --arg v "$V" '.version = $v' .claude-plugin/plugin.json > tmp.json && mv tmp.json .claude-plugin/plugin.json
           jq --arg v "$V" '.plugins[0].version = $v' .claude-plugin/marketplace.json > tmp.json && mv tmp.json .claude-plugin/marketplace.json
+
+      - name: Commit and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .claude-plugin/plugin.json .claude-plugin/marketplace.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.next }}"
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin main --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: v${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
           body: |
             ## Install
 
@@ -50,13 +81,3 @@ jobs:
             /plugin install specflow@specflow
             ```
           generate_release_notes: true
-
-      - name: Commit version bump
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .claude-plugin/plugin.json .claude-plugin/marketplace.json
-          git diff --cached --quiet || {
-            git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
-            git push origin main
-          }
