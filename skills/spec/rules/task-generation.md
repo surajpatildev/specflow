@@ -36,9 +36,10 @@ Every task should reference the requirement IDs it satisfies, and every requirem
 `requirements.md` should appear in at least one task — this is how you verify nothing
 was missed. Include a coverage table at the end of the task set (see below).
 
-### 5. Code-Only Focus
-Tasks cover coding and testing work. Exclude non-code activities — tasks should describe
-what to build and how to verify it, nothing else.
+### 5. Code and Documentation Focus
+Tasks cover coding, testing, and documentation that lives in the repo. When a feature adds or changes user-facing behavior — new API endpoints, CLI commands, configuration options, or setup steps — include a final task to update the project's own documentation (README, API docs, migration guides, etc.). Outdated docs are worse than no docs because users trust them and get burned.
+
+Skip the documentation task when the feature is purely internal with no user-visible surface, or when the project has no existing documentation to update.
 
 ### 6. Parallel Analysis
 Mark tasks that can run concurrently with `[P]` in the task list. Two tasks are parallel

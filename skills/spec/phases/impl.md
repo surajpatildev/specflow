@@ -124,6 +124,12 @@ If all tasks are done, update spec.json: set `phase` to `"complete"` and `update
 All tasks complete! Run /spec status <feature> for a final summary.
 ```
 
+If `.agents/reference/` exists, suggest syncing steering docs since the codebase has changed:
+
+```
+Project context may have drifted — run /steering sync to update steering docs.
+```
+
 ## Rules
 
 - Never implement without approved tasks — no `-y` override
