@@ -18,9 +18,23 @@ Load these files in addition to the shared context from SKILL.md:
 
 Read the description from `spec.json` and the stub in `requirements.md`. Get a baseline understanding of what the user wants before diving into research.
 
-### 2. Research
+### 2. Clarify Scope with the User
 
-Survey the project and external sources to understand what exists and what the feature touches.
+Before diving into deep research, engage the user to understand their vision. Use an interactive question tool (such as AskUserQuestion) if available. Ask one question at a time, following the interaction patterns in SKILL.md's User Interaction section.
+
+Start with the big picture, then drill into specifics:
+
+- **What problem does this solve?** Understand the motivation beyond the feature description.
+- **Who are the users/actors?** Confirm the personas and their needs.
+- **What's the scope?** What's definitely in, what's definitely out, what's unclear.
+- **Key behaviors?** The most important things the feature must do.
+- **Any constraints?** Performance, security, compatibility, existing patterns to follow.
+
+You've already read the spec.json description and any stub — use that context to make your questions specific, not generic. But don't wait until you've explored the entire codebase to start asking. The user's answers will focus your research on what actually matters.
+
+### 3. Research
+
+Survey the project and external sources, now informed by the user's answers about scope and priorities.
 
 **Codebase:**
 - Search for related models, services, routes, schemas, and configuration
@@ -36,23 +50,18 @@ Survey the project and external sources to understand what exists and what the f
 
 For complex features where the required libraries or services are clear from the description, consider dispatching a subagent to research external documentation while you survey the codebase. When the targets aren't clear upfront, survey the codebase first to identify what to research externally.
 
-Map the personas who will interact with this feature (end users, admins, system actors, etc.).
+### 4. Confirm Findings and Fill Gaps
 
-### 3. Clarify with the User
+Present what you learned from research and confirm key decisions with the user. Use an interactive question tool (such as AskUserQuestion) if available.
 
-After research, you'll have a much clearer picture of the feature and a clearer picture of what you *don't* know. Use an interactive question tool (such as AskUserQuestion) if available to present decisions that would materially affect scope or behavior and that you couldn't determine from the codebase. Follow the interaction patterns in SKILL.md's User Interaction section.
+For each area where research revealed multiple valid approaches or raised new questions:
+- Present what you found (the evidence)
+- Propose 2-3 options with tradeoffs
+- Mark your recommendation
 
-Focus on what the feature should do, not how to implement it. For each decision, present 2-3 concrete options grounded in what you found in the code, with your recommendation and the tradeoffs. Group related scope questions together when they're about the same topic.
+Before writing requirements, summarize your understanding of the feature scope: "Here's what I plan to cover — does this match your expectations?" This catches misalignment before you invest in the full document. If research surfaced new personas or edge cases the user didn't mention, confirm those too.
 
-Before moving on, make sure you understand:
-- What the feature should do and what it explicitly should not
-- Who the users/actors are and what they need
-- Key behavioral choices where multiple valid approaches exist
-- Edge cases or error scenarios that affect acceptance criteria
-
-If research answered everything clearly, skip this step and proceed.
-
-### 4. Write Requirements
+### 5. Write Requirements
 
 Generate the full `requirements.md` using the template. Structure:
 
@@ -81,7 +90,7 @@ Number criteria hierarchically under each requirement (1.1, 1.2, 2.1, 2.2, etc.)
 
 **Out of Scope** — Explicitly list related capabilities that are NOT part of this feature. This prevents scope creep during design and implementation.
 
-### 5. Self-Review
+### 6. Self-Review
 
 Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
@@ -91,7 +100,7 @@ Before presenting to the user, dispatch a review subagent following the pattern 
 
 Fix any issues the reviewer finds (inconsistent EARS patterns, untestable criteria, ambiguous language, numbering gaps). Then proceed.
 
-### 6. Update spec.json
+### 7. Update spec.json
 
 Set:
 - `phase`: `"requirements-generated"`
@@ -100,7 +109,7 @@ Set:
 
 Do NOT set `requirements.approved` — that requires user review.
 
-### 7. Present for Review
+### 8. Present for Review
 
 Show the requirements and a quality checklist:
 

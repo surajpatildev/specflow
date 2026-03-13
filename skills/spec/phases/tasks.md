@@ -46,7 +46,18 @@ For projects with layered architectures (e.g., model -> service -> route), a bot
 
 This is a guideline, not a rule. Use whatever order makes sense for the project's architecture (per tech-stack.md if available, otherwise infer from the codebase).
 
-### 3. Size Tasks
+### 3. Confirm Decomposition Approach
+
+Before generating task files, present your proposed decomposition to the user. Use an interactive question tool (such as AskUserQuestion) if available. Follow the interaction patterns in SKILL.md's User Interaction section.
+
+- The number of tasks and their rough scope (one line each)
+- The dependency order and rationale
+- Which tasks can run in parallel
+- Any sizing concerns (tasks that might be too large)
+
+Get confirmation before writing the detailed task files. This prevents generating a full set only to discover the user wanted different granularity or ordering.
+
+### 4. Size Tasks
 
 Each task should be completable in a single implementation session:
 
@@ -58,7 +69,7 @@ Each task should be completable in a single implementation session:
 
 If a task is size L, look for a natural split point. Tasks should cross as few layer boundaries as possible.
 
-### 4. Write Task Files
+### 5. Write Task Files
 
 Create numbered files in `.agents/specs/<feature>/tasks/`:
 
@@ -81,15 +92,15 @@ Each task file follows the template at `templates/task.md`. Key sections:
 - **Acceptance** — Observable, verifiable criteria (include "check command passes" as a standard item)
 - **Notes** — Empty; filled during implementation
 
-### 5. Validate Coverage
+### 6. Validate Coverage
 
 Map every AC to at least one task. Present the traceability and confirm 100% coverage. If any AC is missing, add or expand tasks.
 
-### 6. Update spec.md
+### 7. Update spec.md
 
 Add the task index table to `spec.md` with columns: #, Task, Size, Depends, Requirements, Status (all `pending`). Match the format in the spec.md template.
 
-### 7. Self-Review
+### 8. Self-Review
 
 Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
@@ -99,7 +110,7 @@ Before presenting to the user, dispatch a review subagent following the pattern 
 
 Instruct the reviewer to read all task files in the directory to validate the full set. Fix any issues the reviewer finds (broken dependencies, missing AC coverage, oversized tasks, inconsistent naming). Then proceed.
 
-### 8. Update spec.json
+### 9. Update spec.json
 
 Set:
 - `phase`: `"tasks-generated"`
@@ -108,7 +119,7 @@ Set:
 
 Do NOT set `tasks.approved` — that requires user review.
 
-### 9. Present for Review
+### 10. Present for Review
 
 Show the task list and quality checklist: every AC mapped, valid dependency DAG (no cycles), all tasks S or M size, file paths match project structure, implementation steps self-contained, minimal layer-boundary crossings.
 

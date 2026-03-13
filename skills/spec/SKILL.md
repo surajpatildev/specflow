@@ -101,30 +101,41 @@ If context is getting heavy, start fresh and run `/spec impl <feature>` to conti
 
 ## User Interaction
 
-Getting user alignment right is critical to producing useful specs. These patterns apply to all phases that ask the user questions (requirements, design, gap).
+The user is the domain expert. Your job is to draw out their vision, not to figure everything out autonomously and present a finished artifact. Every phase that involves decisions should feel like a conversation, not a delivery.
 
-### Use Interactive Questions for Decisions
+### Ask Early, Ask Often
 
-When you need user input on decisions that affect scope, behavior, or architecture, use an interactive question tool (such as AskUserQuestion) if available to present structured choices. This gives the user a clear, interactive way to respond rather than having to parse a wall of text.
+Don't disappear into research and resurface with a complete document. The user should feel involved throughout:
 
-- Present **2-3 concrete options** per question, each with a short label and a sentence explaining the tradeoff or impact
-- Mark your **recommended option** and explain why you recommend it
-- Group related questions when they're about the same topic, but don't batch unrelated decisions together
-- If the user's answer doesn't fit any option, they can respond freely
+- **Ask before deep research.** Start by understanding the user's vision, constraints, and priorities through targeted questions. This prevents wasted research and wrong assumptions.
+- **One question at a time.** Each message should contain one question or a small cluster of tightly related questions on the same topic. Don't overwhelm with a wall of questions.
+- **Prefer structured choices.** Present 2-3 concrete options with a short label and a sentence on the tradeoff. Mark your recommendation. The user can always respond freely if none fit.
+- Use an interactive question tool (such as AskUserQuestion) if available to present these choices in a structured, interactive format.
 
-### Investigate Before Asking
+### Propose Before Committing
 
-Every question should reflect what you actually found in the codebase, docs, or web research. Questions grounded in evidence ("I see you're using the repository pattern in `src/repositories/`. Should the new service follow the same pattern?") are far more useful than generic ones ("How should I structure the data layer?"). If the answer is already in the code, don't ask.
+Before writing any major artifact (requirements doc, design doc, task list), present your approach and get alignment:
+
+- **Requirements:** After initial questions, summarize your understanding of scope and key behaviors before writing the full document.
+- **Design:** Propose 2-3 architectural approaches with tradeoffs. Get the user's preference before writing the design.
+- **Tasks:** Present the decomposition strategy (ordering, sizing, boundaries) before generating all task files.
+
+This catches misalignment early, when it's cheap to correct.
+
+### Ground Questions in Evidence
+
+Questions should reflect what you found in the codebase, docs, or research — not be generic. "I see you're using the repository pattern in `src/repositories/`. Should the new service follow the same pattern?" is more useful than "How should I structure the data layer?" If something is clearly established in the code, you don't need to ask — but if you're making an assumption about scope or behavior, confirm it.
 
 ### What to Ask About
 
-Ask about things that **materially affect the result** and **can't be determined from evidence**:
+Ask about things that **materially affect the result**:
 - Scope boundaries (what's in, what's out)
 - Behavioral choices where multiple valid approaches exist
 - Architecture decisions with meaningful tradeoffs
 - Domain concepts that aren't documented in the codebase
+- Priorities when requirements conflict or resources are limited
 
-Don't ask about things you can derive from the codebase, steering docs, or standard patterns. Don't ask implementation-level questions (save those for design/tasks). If research answered everything clearly, skip asking and proceed.
+Don't ask implementation-level questions (save those for task files). Don't ask about things that are clearly established in the codebase or steering docs.
 
 ## Rules
 

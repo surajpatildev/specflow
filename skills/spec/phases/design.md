@@ -59,26 +59,36 @@ Follow `rules/discovery.md` based on the classification. This includes both code
 - Read the specific file(s) that will change
 - Confirm the change fits existing patterns
 
-### 3. Resolve Ambiguities
+### 3. Propose Approaches
 
-Discovery often reveals decisions that affect architecture or data modeling where the answer isn't clear from the requirements or codebase. Use an interactive question tool (such as AskUserQuestion) if available to present these decisions before proceeding. Follow the interaction patterns in SKILL.md's User Interaction section.
+Before committing to a design, present 2-3 architectural approaches to the user. Use an interactive question tool (such as AskUserQuestion) if available. Follow the interaction patterns in SKILL.md's User Interaction section.
 
-For each decision, present what you found during discovery, your recommended approach, and the alternatives with their tradeoffs. Design decisions made without user input are expensive to change once implementation starts.
+For each approach:
+- A short label (e.g., "Event-driven", "Direct service calls", "Queue-based")
+- How it fits the existing architecture
+- Key tradeoffs (complexity, performance, flexibility, maintenance)
+- Your recommendation and why
 
-Common design decisions that need user input:
+This is where the user shapes the design direction. A design written without this step often needs to be rewritten when the user had a different mental model.
+
+### 4. Resolve Remaining Decisions
+
+Discovery and the approach discussion often surface specific decisions that still need user input. Present each one with what you found, your recommendation, and alternatives. Use an interactive question tool (such as AskUserQuestion) if available.
+
+Common decisions that need input:
 - Data model choices (normalize vs. denormalize, separate table vs. embedded)
 - Integration approach (sync vs. async, polling vs. webhooks)
 - Authorization model (role-based, resource-based, attribute-based)
 - Caching and performance tradeoffs
 - Third-party service selection when multiple options exist
 
-If discovery answered everything clearly, skip this step.
+Design decisions made without user input are expensive to change once implementation starts. When in doubt, ask.
 
-### 4. Persist Research
+### 5. Persist Research
 
 Write findings to `.agents/specs/<feature>/research.md` using the template at `templates/research.md`. This preserves context for the tasks and impl phases even if the conversation is cleared.
 
-### 5. Generate Design Document
+### 6. Generate Design Document
 
 Write `.agents/specs/<feature>/design.md` using the template. Include these sections:
 
@@ -105,7 +115,7 @@ Write `.agents/specs/<feature>/design.md` using the template. Include these sect
 
 **Open Questions** — Decisions that need user input. If any open question would block task decomposition, ask the user now rather than leaving it unresolved.
 
-### 6. Self-Review
+### 7. Self-Review
 
 Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
@@ -115,7 +125,7 @@ Before presenting to the user, dispatch a review subagent following the pattern 
 
 Fix any issues the reviewer finds (untraced requirements, internal contradictions, incomplete sections, invented requirements). Then proceed.
 
-### 7. Update spec.json
+### 8. Update spec.json
 
 Set:
 - `phase`: `"design-generated"`
@@ -124,7 +134,7 @@ Set:
 
 Do NOT set `design.approved` — that requires user review.
 
-### 8. Present for Review
+### 9. Present for Review
 
 Show the design and a quality checklist:
 
