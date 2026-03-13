@@ -27,7 +27,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
+          fetch-tags: true
 
       - name: Compute next version
         id: version
@@ -39,6 +40,11 @@ jobs:
             CURRENT="${LATEST#v}"
           fi
 
+          if ! [[ "$CURRENT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Latest tag '$LATEST' is not valid semver"
+            exit 1
+          fi
+
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
 
           case "${{ inputs.bump }}" in
@@ -48,28 +54,35 @@ jobs:
           esac
 
           NEXT="${MAJOR}.${MINOR}.${PATCH}"
-          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
           echo "next=$NEXT" >> "$GITHUB_OUTPUT"
           echo "tag=v${NEXT}" >> "$GITHUB_OUTPUT"
           echo "Bumping $CURRENT -> $NEXT (${{ inputs.bump }})"
 
+      - name: Ensure tag does not exist
+        run: |
+          if git rev-parse "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "::error::Tag ${{ steps.version.outputs.tag }} already exists"
+            exit 1
+          fi
+
       - name: Update version in plugin manifests
         run: |
           V="${{ steps.version.outputs.next }}"
-          jq --arg v "$V" '.version = $v' .claude-plugin/plugin.json > tmp.json && mv tmp.json .claude-plugin/plugin.json
-          jq --arg v "$V" '.plugins[0].version = $v' .claude-plugin/marketplace.json > tmp.json && mv tmp.json .claude-plugin/marketplace.json
+          updated=$(jq --arg v "$V" '.version = $v' .claude-plugin/plugin.json) && echo "$updated" > .claude-plugin/plugin.json
+          updated=$(jq --arg v "$V" '.plugins[0].version = $v' .claude-plugin/marketplace.json) && echo "$updated" > .claude-plugin/marketplace.json
 
-      - name: Commit and tag
+      - name: Commit, tag, and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .claude-plugin/plugin.json .claude-plugin/marketplace.json
           git commit -m "chore: bump version to ${{ steps.version.outputs.next }}"
           git tag "${{ steps.version.outputs.tag }}"
-          git push origin main --tags
+          git push origin main
+          git push origin "${{ steps.version.outputs.tag }}"
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@c062e08bd532815e2082a07e5e6fad17a04daafc # v2.2.1
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: ${{ steps.version.outputs.tag }}
@@ -81,3 +94,7 @@ jobs:
             /plugin install specflow@specflow
             ```
           generate_release_notes: true
+
+      - name: Cleanup tag on release failure
+        if: failure()
+        run: git push --delete origin "${{ steps.version.outputs.tag }}" || true
