@@ -39,19 +39,21 @@ Determine the scope to calibrate discovery depth:
 
 ### 2. Execute Discovery
 
-Follow `rules/discovery.md` based on the classification.
+Follow `rules/discovery.md` based on the classification. This includes both codebase analysis and external documentation research — see the External Research and Parallel Research sections in `rules/discovery.md` for tool guidance and subagent patterns.
 
 **Full Discovery** (New Feature / Complex Integration):
 - Map all related modules, services, and data flows
 - Read key files end-to-end to understand patterns
 - Trace request flows through the system
 - Identify all integration points
+- Verify library/API capabilities against current documentation
 - Document architectural constraints (from tech-stack.md if available, otherwise infer from the codebase)
 
 **Light Discovery** (Extension):
 - Read the target module and its direct dependencies
 - Understand the existing patterns in that area
 - Identify the extension points
+- Verify any new library features or APIs against current documentation
 
 **Minimal Discovery** (Simple Addition):
 - Read the specific file(s) that will change

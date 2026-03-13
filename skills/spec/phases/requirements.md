@@ -8,6 +8,7 @@ Load these files in addition to the shared context from SKILL.md:
 
 - `.agents/specs/<feature>/requirements.md` — the stub from init
 - `rules/ears-format.md` — EARS syntax reference
+- `rules/discovery.md` — tool guidance for external documentation research
 - `rules/self-review.md` — subagent review pattern
 - `templates/requirements.md` — output template
 
@@ -17,15 +18,23 @@ Load these files in addition to the shared context from SKILL.md:
 
 Read the description from `spec.json` and the stub in `requirements.md`. Get a baseline understanding of what the user wants before diving into research.
 
-### 2. Research the Codebase
+### 2. Research
 
-Survey the project to understand what exists and what the feature touches. Use all available tools — search the codebase, read existing code, check documentation, explore the web for relevant library docs or patterns:
+Survey the project and external sources to understand what exists and what the feature touches.
 
+**Codebase:**
 - Search for related models, services, routes, schemas, and configuration
 - Read existing code in areas the feature will extend or interact with
 - Check for documentation (README, inline docs, ADRs) that clarifies domain concepts
 - Review the product context (`.agents/reference/product.md`, if exists) to identify relevant user types
 - Check `.agents/reference/tech-stack.md` (if exists) for architectural patterns that constrain design
+
+**External — when the feature depends on libraries, APIs, or external services:**
+- Look up current documentation to verify capabilities before writing requirements that depend on them — requirements that assume a library can do something it can't lead to designs that fail at implementation
+- Use documentation lookup tools (such as context7), web fetch tools (such as WebFetch), or web search tools (such as WebSearch) to confirm APIs, features, and integration patterns
+- See `rules/discovery.md` — External Research for tool priority and source quality guidance
+
+For complex features where the required libraries or services are clear from the description, consider dispatching a subagent to research external documentation while you survey the codebase. When the targets aren't clear upfront, survey the codebase first to identify what to research externally.
 
 Map the personas who will interact with this feature (end users, admins, system actors, etc.).
 
