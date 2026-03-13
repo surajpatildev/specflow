@@ -20,6 +20,7 @@ Load these files in addition to the shared context from SKILL.md:
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/discovery.md` — research process
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/design-principles.md` — quality standards
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/design-review.md` — review criteria for the presentation step
+- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md` — subagent review pattern
 - `${CLAUDE_PLUGIN_ROOT}/templates/design.md` — output template
 - `${CLAUDE_PLUGIN_ROOT}/templates/research.md` — research output template
 
@@ -102,7 +103,17 @@ Write `.agents/specs/<feature>/design.md` using the template. Include these sect
 
 **Open Questions** — Decisions that need user input. If any open question would block task decomposition, ask the user now rather than leaving it unresolved.
 
-### 6. Update spec.json
+### 6. Self-Review
+
+Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
+
+- **Artifact:** `.agents/specs/<feature>/design.md`
+- **Inputs:** `.agents/specs/<feature>/requirements.md`, `.agents/specs/<feature>/research.md` (if exists), `.agents/specs/<feature>/gap-analysis.md` (if exists)
+- **Phase:** `design`
+
+Fix any issues the reviewer finds (untraced requirements, internal contradictions, incomplete sections, invented requirements). Then proceed.
+
+### 7. Update spec.json
 
 Set:
 - `phase`: `"design-generated"`
@@ -111,7 +122,7 @@ Set:
 
 Do NOT set `design.approved` — that requires user review.
 
-### 7. Present for Review
+### 8. Present for Review
 
 Show the design and a quality checklist:
 

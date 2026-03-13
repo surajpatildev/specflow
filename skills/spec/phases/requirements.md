@@ -8,6 +8,7 @@ Load these files in addition to the shared context from SKILL.md:
 
 - `.agents/specs/<feature>/requirements.md` — the stub from init
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/ears-format.md` — EARS syntax reference
+- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md` — subagent review pattern
 - `${CLAUDE_PLUGIN_ROOT}/templates/requirements.md` — output template
 
 ## Procedure
@@ -71,7 +72,17 @@ Number criteria hierarchically under each requirement (1.1, 1.2, 2.1, 2.2, etc.)
 
 **Out of Scope** — Explicitly list related capabilities that are NOT part of this feature. This prevents scope creep during design and implementation.
 
-### 5. Update spec.json
+### 5. Self-Review
+
+Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
+
+- **Artifact:** `.agents/specs/<feature>/requirements.md`
+- **Inputs:** `spec.json` (for the feature description)
+- **Phase:** `requirements`
+
+Fix any issues the reviewer finds (inconsistent EARS patterns, untestable criteria, ambiguous language, numbering gaps). Then proceed.
+
+### 6. Update spec.json
 
 Set:
 - `phase`: `"requirements-generated"`
@@ -80,7 +91,7 @@ Set:
 
 Do NOT set `requirements.approved` — that requires user review.
 
-### 6. Present for Review
+### 7. Present for Review
 
 Show the requirements and a quality checklist:
 
