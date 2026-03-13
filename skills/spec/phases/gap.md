@@ -78,7 +78,9 @@ For each option, note: effort estimate, risk level, and tradeoffs.
 
 ### 6. Discuss with the User
 
-Present your approach options and ask the user which direction they prefer. This choice shapes the entire design phase, so it's worth getting right before writing the analysis. Share your recommendation and reasoning, but let the user make the call — they have context about team preferences, timelines, and risk appetite that the codebase alone can't tell you.
+Use the **AskUserQuestion tool** to present your approach options and ask the user which direction they prefer. Follow the interaction patterns in SKILL.md's User Interaction section.
+
+For each option, include the effort estimate, risk level, and tradeoffs as part of the option description. Mark your recommended option and explain why. This choice shapes the entire design phase, so it's worth getting right before writing the analysis. The user has context about team preferences, timelines, and risk appetite that the codebase alone can't tell you.
 
 If one option clearly dominates (e.g., the feature is greenfield with nothing to extend), state your recommendation and proceed unless the user objects.
 

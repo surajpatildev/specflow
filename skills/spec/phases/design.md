@@ -58,7 +58,16 @@ Follow `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/discovery.md` based on the class
 
 ### 3. Resolve Ambiguities
 
-Discovery often reveals decisions that affect architecture or data modeling where the answer isn't clear from the requirements or codebase. Ask the user about these before proceeding — present what you found, your recommended approach, and the alternatives with their tradeoffs. Design decisions made without user input are expensive to change once implementation starts.
+Discovery often reveals decisions that affect architecture or data modeling where the answer isn't clear from the requirements or codebase. Use the **AskUserQuestion tool** to present these decisions before proceeding. Follow the interaction patterns in SKILL.md's User Interaction section.
+
+For each decision, present what you found during discovery, your recommended approach, and the alternatives with their tradeoffs. Design decisions made without user input are expensive to change once implementation starts.
+
+Common design decisions that need user input:
+- Data model choices (normalize vs. denormalize, separate table vs. embedded)
+- Integration approach (sync vs. async, polling vs. webhooks)
+- Authorization model (role-based, resource-based, attribute-based)
+- Caching and performance tradeoffs
+- Third-party service selection when multiple options exist
 
 If discovery answered everything clearly, skip this step.
 

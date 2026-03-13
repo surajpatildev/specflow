@@ -97,6 +97,33 @@ Task N complete. X remaining.
 If context is getting heavy, start fresh and run `/spec impl <feature>` to continue.
 ```
 
+## User Interaction
+
+Getting user alignment right is critical to producing useful specs. These patterns apply to all phases that ask the user questions (requirements, design, gap).
+
+### Use AskUserQuestion for Decisions
+
+When you need user input on decisions that affect scope, behavior, or architecture, use the **AskUserQuestion tool** to present structured choices. This gives the user a clear, interactive way to respond rather than having to parse a wall of text.
+
+- Present **2-3 concrete options** per question, each with a short label and a sentence explaining the tradeoff or impact
+- Mark your **recommended option** and explain why you recommend it
+- Group related questions when they're about the same topic, but don't batch unrelated decisions together
+- If the user's answer doesn't fit any option, they can respond freely
+
+### Investigate Before Asking
+
+Every question should reflect what you actually found in the codebase, docs, or web research. Questions grounded in evidence ("I see you're using the repository pattern in `src/repositories/`. Should the new service follow the same pattern?") are far more useful than generic ones ("How should I structure the data layer?"). If the answer is already in the code, don't ask.
+
+### What to Ask About
+
+Ask about things that **materially affect the result** and **can't be determined from evidence**:
+- Scope boundaries (what's in, what's out)
+- Behavioral choices where multiple valid approaches exist
+- Architecture decisions with meaningful tradeoffs
+- Domain concepts that aren't documented in the codebase
+
+Don't ask about things you can derive from the codebase, steering docs, or standard patterns. Don't ask implementation-level questions (save those for design/tasks). If research answered everything clearly, skip asking and proceed.
+
 ## Rules
 
 - Every spec lives in `.agents/specs/<feature-name>/` as a directory

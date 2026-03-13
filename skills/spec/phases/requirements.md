@@ -30,7 +30,15 @@ Map the personas who will interact with this feature (end users, admins, system 
 
 ### 3. Clarify with the User
 
-After research, you'll have a much clearer picture of the feature — and a clearer picture of what you *don't* know. Ask the user about anything that would materially affect scope or behavior and that you couldn't determine from the codebase. Focus on what the feature should do, not how to implement it. Present concrete options where you can — grounded questions based on what you found in the code are far more useful than abstract ones.
+After research, you'll have a much clearer picture of the feature and a clearer picture of what you *don't* know. Use the **AskUserQuestion tool** to present decisions that would materially affect scope or behavior and that you couldn't determine from the codebase. Follow the interaction patterns in SKILL.md's User Interaction section.
+
+Focus on what the feature should do, not how to implement it. For each decision, present 2-3 concrete options grounded in what you found in the code, with your recommendation and the tradeoffs. Group related scope questions together when they're about the same topic.
+
+Before moving on, make sure you understand:
+- What the feature should do and what it explicitly should not
+- Who the users/actors are and what they need
+- Key behavioral choices where multiple valid approaches exist
+- Edge cases or error scenarios that affect acceptance criteria
 
 If research answered everything clearly, skip this step and proceed.
 
