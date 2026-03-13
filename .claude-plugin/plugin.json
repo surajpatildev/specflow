@@ -1,6 +1,6 @@
 {
   "name": "specflow",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Spec-driven development workflow for AI agents. Plan features with structured requirements, designs, and tasks before writing code.",
   "author": {
     "name": "Suraj",
