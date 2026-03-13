@@ -70,9 +70,9 @@ Use this structure. Render as real markdown — not inside code fences.
 
 | Stage | Generated | Approved |
 |-------|:---------:|:--------:|
-| Requirements | :white_check_mark: | :white_check_mark: |
-| Design | :white_check_mark: | :white_check_mark: |
-| Tasks | :white_check_mark: | :x: |
+| Requirements | ✅ | ✅ |
+| Design | ✅ | ✅ |
+| Tasks | ✅ | ❌ |
 ```
 
 **Task breakdown** — status indicators make each row scannable without reading the status column:
@@ -82,11 +82,11 @@ Use this structure. Render as real markdown — not inside code fences.
 
 | # | Task | Size | Depends | Reqs | Status |
 |--:|------|:----:|---------|------|--------|
-| 01 | Create notification model | S | — | 1.1 | :white_check_mark: done |
-| 02 | Add WebSocket channel | M | 01 | 1.2, 2.1 | :arrows_counterclockwise: in-progress |
-| 03 | Build notification feed UI | M | 01, 02 | 2.2 | :hourglass_flowing_sand: pending |
-| 04 | Implement read/unread toggle | S | 03 | 2.3 | :hourglass_flowing_sand: pending |
-| 05 | Add email fallback | M | 01 | 3.1 | :no_entry_sign: blocked |
+| 01 | Create notification model | S | — | 1.1 | ✅ done |
+| 02 | Add WebSocket channel | M | 01 | 1.2, 2.1 | 🔄 in-progress |
+| 03 | Build notification feed UI | M | 01, 02 | 2.2 | ⏳ pending |
+| 04 | Implement read/unread toggle | S | 03 | 2.3 | ⏳ pending |
+| 05 | Add email fallback | M | 01 | 3.1 | 🚫 blocked |
 
 **Progress: 1/5 done** · 1 in-progress · 2 pending · 1 blocked
 ```
