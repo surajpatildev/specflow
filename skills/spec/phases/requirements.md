@@ -77,7 +77,7 @@ Number criteria hierarchically under each requirement (1.1, 1.2, 2.1, 2.2, etc.)
 Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
 
 - **Artifact:** `.agents/specs/<feature>/requirements.md`
-- **Inputs:** `spec.json` (for the feature description)
+- **Inputs:** `.agents/specs/<feature>/spec.json`
 - **Phase:** `requirements`
 
 Fix any issues the reviewer finds (inconsistent EARS patterns, untestable criteria, ambiguous language, numbering gaps). Then proceed.

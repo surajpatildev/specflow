@@ -93,11 +93,11 @@ Add the task index table to `spec.md` with columns: #, Task, Size, Depends, Requ
 
 Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
 
-- **Artifact:** All task files in `.agents/specs/<feature>/tasks/`
+- **Artifact:** `.agents/specs/<feature>/tasks/` (all `.md` files in the directory)
 - **Inputs:** `.agents/specs/<feature>/requirements.md`, `.agents/specs/<feature>/design.md`
 - **Phase:** `tasks`
 
-Fix any issues the reviewer finds (broken dependencies, missing AC coverage, oversized tasks, inconsistent naming). Then proceed.
+Instruct the reviewer to read all task files in the directory to validate the full set. Fix any issues the reviewer finds (broken dependencies, missing AC coverage, oversized tasks, inconsistent naming). Then proceed.
 
 ### 8. Update spec.json
 
