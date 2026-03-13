@@ -12,7 +12,7 @@
       "name": "specflow",
       "source": "./",
       "description": "Spec-driven development workflow for AI agents. Plan features with structured requirements, designs, and tasks before writing code.",
-      "version": "1.0.7",
+      "version": "1.0.6",
       "homepage": "https://github.com/surajpatildev/specflow",
       "repository": "https://github.com/surajpatildev/specflow",
       "license": "MIT",
