@@ -49,8 +49,4 @@ fi
 # Nothing to inject → exit silently (plugin skills are already discoverable)
 [ -z "$out" ] && exit 0
 
-if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
-  printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$out"
-else
-  printf '{"additional_context":"%s"}' "$out"
-fi
+printf '{"systemMessage":"%s"}' "$out"

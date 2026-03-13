@@ -22,12 +22,8 @@ while IFS= read -r f; do
   case "${phase:-}" in
     initialized|requirements*|design*|tasks*|in-progress)
       name="${name//\\/\\\\}"; name="${name//\"/\\\"}"
-      msg="<specflow-reminder>\nContext is being compacted. Spec ${name} is in ${phase} phase.\nAfter compaction, use /spec status to recover context and continue.\n</specflow-reminder>"
-      if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
-        printf '{"hookSpecificOutput":{"hookEventName":"PreCompact","additionalContext":"%s"}}' "$msg"
-      else
-        printf '{"additional_context":"%s"}' "$msg"
-      fi
+      msg="Context is being compacted. Spec ${name} is in ${phase} phase. After compaction, use /spec status to recover context and continue."
+      printf '{"systemMessage":"%s"}' "$msg"
       exit 0
       ;;
   esac
