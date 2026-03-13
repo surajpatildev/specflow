@@ -7,6 +7,8 @@ description: Build and maintain project knowledge for spec-driven development. U
 
 Build and maintain the project knowledge base that powers spec-driven development. Steering docs live in `.agents/reference/` and get loaded by the spec workflow to ground requirements, designs, and tasks in the project's reality.
 
+All file paths in this skill are relative to this skill's root directory (the directory containing this SKILL.md).
+
 The two core docs — `product.md` and `tech-stack.md` — are the minimum. Beyond those, any topic that shapes how features are designed and built deserves its own reference doc: testing conventions, API standards, security practices, deployment workflows, database patterns, or anything specific to the project.
 
 ## Mode Detection
@@ -118,7 +120,7 @@ mkdir -p .agents/reference
 mkdir -p .agents/specs
 ```
 
-Generate the two core files using `${CLAUDE_PLUGIN_ROOT}/templates/steering/product.md` and `${CLAUDE_PLUGIN_ROOT}/templates/steering/tech-stack.md` as structural guides. Read each template first, then fill every section with findings + user corrections.
+Generate the two core files using `templates/product.md` and `templates/tech-stack.md` as structural guides. Read each template first, then fill every section with findings + user corrections.
 
 ### Step 5: Suggest Additional Topics
 

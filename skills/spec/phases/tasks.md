@@ -17,9 +17,9 @@ Load these in addition to shared context from SKILL.md:
 
 - `.agents/specs/<feature>/requirements.md`, `design.md`, `research.md` (if exists), `gap-analysis.md` (if exists)
 - `.agents/reference/tech-stack.md` (if exists) — for directory structure conventions
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/task-generation.md` — decomposition principles
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md` — subagent review pattern
-- `${CLAUDE_PLUGIN_ROOT}/templates/task.md` — task file template
+- `rules/task-generation.md` — decomposition principles
+- `rules/self-review.md` — subagent review pattern
+- `templates/task.md` — task file template
 
 ## Procedure
 
@@ -72,7 +72,7 @@ tasks/
 
 Naming convention: `NN-verb-noun.md` (e.g., `01-create-data-models.md`, `02-add-service-logic.md`).
 
-Each task file follows the template at `${CLAUDE_PLUGIN_ROOT}/templates/task.md`. Key sections:
+Each task file follows the template at `templates/task.md`. Key sections:
 
 - **Title** — Short, action-oriented (e.g., "Create user notification model")
 - **What** — Capabilities in natural language, no code details
@@ -91,7 +91,7 @@ Add the task index table to `spec.md` with columns: #, Task, Size, Depends, Requ
 
 ### 7. Self-Review
 
-Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
+Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
 - **Artifact:** `.agents/specs/<feature>/tasks/` (all `.md` files in the directory)
 - **Inputs:** `.agents/specs/<feature>/requirements.md`, `.agents/specs/<feature>/design.md`

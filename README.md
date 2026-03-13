@@ -22,19 +22,22 @@ AI coding assistants work best with clear direction. Without structure, features
 
 ## Install
 
-**Step 1:** Add the marketplace
+### Claude Code
 
 ```
 /plugin marketplace add surajpatildev/specflow
-```
-
-**Step 2:** Install the plugin
-
-```
 /plugin install specflow@specflow
 ```
 
-That's it. You now have two slash commands: **`/spec`** and **`/steering`**.
+### Any Agent (Codex, OpenCode, Gemini CLI, Cursor, etc.)
+
+```
+npx skills add surajpatildev/specflow
+```
+
+This installs SpecFlow's skills into your project's agent skills directory, which is automatically discovered by any agent that supports the [Agent Skills](https://agentskills.io) standard.
+
+> **Note:** Hooks (session-start context injection, pre-compact warnings) are only available via the Claude Code plugin installation. Other agents work fine without them — use `/spec status` to recover context at the start of a session.
 
 ---
 

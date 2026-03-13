@@ -10,7 +10,7 @@ Generating a complex artifact consumes significant context. By dispatching a fre
 
 ### 1. Dispatch the Reviewer
 
-After writing the artifact to disk, dispatch a **general-purpose** subagent with the **Agent tool**. Fill in the placeholders in the template below with actual file paths, then pass the result as the `prompt` parameter. Never pass your session history.
+After writing the artifact to disk, dispatch a subagent to perform the review. Fill in the placeholders in the template below with actual file paths and pass it as the subagent's prompt. Never pass your session history — the reviewer should start fresh with only the artifact and inputs.
 
 **Example (requirements phase):**
 ```

@@ -78,7 +78,7 @@ For each option, note: effort estimate, risk level, and tradeoffs.
 
 ### 6. Discuss with the User
 
-Use the **AskUserQuestion tool** to present your approach options and ask the user which direction they prefer. Follow the interaction patterns in SKILL.md's User Interaction section.
+Use an interactive question tool (such as AskUserQuestion) if available to present your approach options and ask the user which direction they prefer. Follow the interaction patterns in SKILL.md's User Interaction section.
 
 For each option, include the effort estimate, risk level, and tradeoffs as part of the option description. Mark your recommended option and explain why. This choice shapes the entire design phase, so it's worth getting right before writing the analysis. The user has context about team preferences, timelines, and risk appetite that the codebase alone can't tell you.
 
@@ -86,7 +86,7 @@ If one option clearly dominates (e.g., the feature is greenfield with nothing to
 
 ### 7. Write gap-analysis.md
 
-Write the full analysis to `.agents/specs/<feature>/gap-analysis.md` using the template at `${CLAUDE_PLUGIN_ROOT}/templates/gap-analysis.md`. Include the user's chosen approach in the Recommendation section.
+Write the full analysis to `.agents/specs/<feature>/gap-analysis.md` using the template at `templates/gap-analysis.md`. Include the user's chosen approach in the Recommendation section.
 
 ### 8. Update spec.json
 

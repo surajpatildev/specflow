@@ -65,6 +65,9 @@ If any item fails, fix and re-verify.
 - Set status to `done`
 - Add implementation notes (deviations from plan, discoveries, decisions made) to the Notes section
 
+**Update spec.md**:
+- Update the task's Status in the task index table from `pending` to `done`
+
 ### 6. Commit
 
 Stage and commit the changes using conventional commit format:

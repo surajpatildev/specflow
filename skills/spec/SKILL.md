@@ -22,18 +22,20 @@ Structured planning and implementation workflow for features that benefit from d
 
 ## Routing
 
+All file paths in this skill are relative to this skill's root directory (the directory containing this SKILL.md).
+
 Parse the first argument to determine the subcommand:
 
 | Argument | Phase file | Description |
 |----------|-----------|-------------|
-| `init` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/init.md` | Initialize a new spec from a description |
-| `requirements` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/requirements.md` | Generate EARS-format requirements |
-| `design` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/design.md` | Discovery + technical design |
-| `tasks` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/tasks.md` | Decompose design into implementation tasks |
-| `gap` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/gap.md` | Brownfield gap analysis |
-| `status` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/status.md` | Show spec progress and next steps |
-| `impl` | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/impl.md` | Implement next eligible task |
-| (no args) | `${CLAUDE_PLUGIN_ROOT}/skills/spec/phases/status.md` | Auto-detect active spec, show status |
+| `init` | `phases/init.md` | Initialize a new spec from a description |
+| `requirements` | `phases/requirements.md` | Generate EARS-format requirements |
+| `design` | `phases/design.md` | Discovery + technical design |
+| `tasks` | `phases/tasks.md` | Decompose design into implementation tasks |
+| `gap` | `phases/gap.md` | Brownfield gap analysis |
+| `status` | `phases/status.md` | Show spec progress and next steps |
+| `impl` | `phases/impl.md` | Implement next eligible task |
+| (no args) | `phases/status.md` | Auto-detect active spec, show status |
 
 ## Shared Context (Load Before Every Phase)
 
@@ -101,9 +103,9 @@ If context is getting heavy, start fresh and run `/spec impl <feature>` to conti
 
 Getting user alignment right is critical to producing useful specs. These patterns apply to all phases that ask the user questions (requirements, design, gap).
 
-### Use AskUserQuestion for Decisions
+### Use Interactive Questions for Decisions
 
-When you need user input on decisions that affect scope, behavior, or architecture, use the **AskUserQuestion tool** to present structured choices. This gives the user a clear, interactive way to respond rather than having to parse a wall of text.
+When you need user input on decisions that affect scope, behavior, or architecture, use an interactive question tool (such as AskUserQuestion) if available to present structured choices. This gives the user a clear, interactive way to respond rather than having to parse a wall of text.
 
 - Present **2-3 concrete options** per question, each with a short label and a sentence explaining the tradeoff or impact
 - Mark your **recommended option** and explain why you recommend it

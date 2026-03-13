@@ -50,7 +50,7 @@ between the two tasks. If any overlap exists, the tasks are sequential.
 
 ## Task File Format
 
-Each task file uses the template at `${CLAUDE_PLUGIN_ROOT}/templates/task.md`:
+Each task file uses the template at `templates/task.md`:
 
 ```markdown
 # Task <N>: <Title>

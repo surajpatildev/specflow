@@ -6,9 +6,9 @@ Initialize a new feature spec from a natural-language description.
 
 - **Description**: The user's feature description (free-form text)
 - **Template files**:
-  - `${CLAUDE_PLUGIN_ROOT}/templates/spec.json`
-  - `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`
-  - `${CLAUDE_PLUGIN_ROOT}/templates/requirements.md`
+  - `templates/spec.json`
+  - `templates/spec.md`
+  - `templates/requirements.md`
 
 ## Procedure
 
@@ -42,20 +42,20 @@ Create the following tree:
 
 ### 4. Populate Files
 
-**spec.json** — Copy from `${CLAUDE_PLUGIN_ROOT}/templates/spec.json` and fill in:
+**spec.json** — Copy from `templates/spec.json` and fill in:
 - `feature_name`: the kebab-case slug
 - `description`: the user's original description (trimmed)
 - `created_at` / `updated_at`: today's date (YYYY-MM-DD)
 - All other fields keep their template defaults (`phase: "initialized"`, booleans `false`, `branch: null`)
 
-**spec.md** — Copy from `${CLAUDE_PLUGIN_ROOT}/templates/spec.md`:
+**spec.md** — Copy from `templates/spec.md`:
 - Replace `{{FEATURE_NAME}}` with the slug
 - Fill the **Problem** section with what's broken or missing (extract from the user's description)
 - Fill the **Goal** section with the desired end state (one sentence)
 - Replace `{{DATE}}` with today's date (YYYY-MM-DD)
 - Leave task index empty — it gets populated during the tasks phase
 
-**requirements.md** — Copy from `${CLAUDE_PLUGIN_ROOT}/templates/requirements.md`:
+**requirements.md** — Copy from `templates/requirements.md`:
 - Replace `{{FEATURE_NAME}}` with the slug
 - Add a stub section with the description so the requirements phase has context
 

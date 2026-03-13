@@ -7,9 +7,9 @@ Generate EARS-format requirements from the feature description and codebase rese
 Load these files in addition to the shared context from SKILL.md:
 
 - `.agents/specs/<feature>/requirements.md` — the stub from init
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/ears-format.md` — EARS syntax reference
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md` — subagent review pattern
-- `${CLAUDE_PLUGIN_ROOT}/templates/requirements.md` — output template
+- `rules/ears-format.md` — EARS syntax reference
+- `rules/self-review.md` — subagent review pattern
+- `templates/requirements.md` — output template
 
 ## Procedure
 
@@ -31,7 +31,7 @@ Map the personas who will interact with this feature (end users, admins, system 
 
 ### 3. Clarify with the User
 
-After research, you'll have a much clearer picture of the feature and a clearer picture of what you *don't* know. Use the **AskUserQuestion tool** to present decisions that would materially affect scope or behavior and that you couldn't determine from the codebase. Follow the interaction patterns in SKILL.md's User Interaction section.
+After research, you'll have a much clearer picture of the feature and a clearer picture of what you *don't* know. Use an interactive question tool (such as AskUserQuestion) if available to present decisions that would materially affect scope or behavior and that you couldn't determine from the codebase. Follow the interaction patterns in SKILL.md's User Interaction section.
 
 Focus on what the feature should do, not how to implement it. For each decision, present 2-3 concrete options grounded in what you found in the code, with your recommendation and the tradeoffs. Group related scope questions together when they're about the same topic.
 
@@ -74,7 +74,7 @@ Number criteria hierarchically under each requirement (1.1, 1.2, 2.1, 2.2, etc.)
 
 ### 5. Self-Review
 
-Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
+Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
 - **Artifact:** `.agents/specs/<feature>/requirements.md`
 - **Inputs:** `.agents/specs/<feature>/spec.json`

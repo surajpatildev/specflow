@@ -17,12 +17,12 @@ Load these files in addition to the shared context from SKILL.md:
 
 - `.agents/specs/<feature>/requirements.md` — approved requirements
 - `.agents/specs/<feature>/gap-analysis.md` (if exists) — from /spec gap
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/discovery.md` — research process
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/design-principles.md` — quality standards
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/design-review.md` — review criteria for the presentation step
-- `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md` — subagent review pattern
-- `${CLAUDE_PLUGIN_ROOT}/templates/design.md` — output template
-- `${CLAUDE_PLUGIN_ROOT}/templates/research.md` — research output template
+- `rules/discovery.md` — research process
+- `rules/design-principles.md` — quality standards
+- `rules/design-review.md` — review criteria for the presentation step
+- `rules/self-review.md` — subagent review pattern
+- `templates/design.md` — output template
+- `templates/research.md` — research output template
 
 ## Procedure
 
@@ -39,7 +39,7 @@ Determine the scope to calibrate discovery depth:
 
 ### 2. Execute Discovery
 
-Follow `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/discovery.md` based on the classification.
+Follow `rules/discovery.md` based on the classification.
 
 **Full Discovery** (New Feature / Complex Integration):
 - Map all related modules, services, and data flows
@@ -59,7 +59,7 @@ Follow `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/discovery.md` based on the class
 
 ### 3. Resolve Ambiguities
 
-Discovery often reveals decisions that affect architecture or data modeling where the answer isn't clear from the requirements or codebase. Use the **AskUserQuestion tool** to present these decisions before proceeding. Follow the interaction patterns in SKILL.md's User Interaction section.
+Discovery often reveals decisions that affect architecture or data modeling where the answer isn't clear from the requirements or codebase. Use an interactive question tool (such as AskUserQuestion) if available to present these decisions before proceeding. Follow the interaction patterns in SKILL.md's User Interaction section.
 
 For each decision, present what you found during discovery, your recommended approach, and the alternatives with their tradeoffs. Design decisions made without user input are expensive to change once implementation starts.
 
@@ -74,7 +74,7 @@ If discovery answered everything clearly, skip this step.
 
 ### 4. Persist Research
 
-Write findings to `.agents/specs/<feature>/research.md` using the template at `${CLAUDE_PLUGIN_ROOT}/templates/research.md`. This preserves context for the tasks and impl phases even if the conversation is cleared.
+Write findings to `.agents/specs/<feature>/research.md` using the template at `templates/research.md`. This preserves context for the tasks and impl phases even if the conversation is cleared.
 
 ### 5. Generate Design Document
 
@@ -105,7 +105,7 @@ Write `.agents/specs/<feature>/design.md` using the template. Include these sect
 
 ### 6. Self-Review
 
-Before presenting to the user, dispatch a review subagent following the pattern in `${CLAUDE_PLUGIN_ROOT}/skills/spec/rules/self-review.md`. Pass:
+Before presenting to the user, dispatch a review subagent following the pattern in `rules/self-review.md`. Pass:
 
 - **Artifact:** `.agents/specs/<feature>/design.md`
 - **Inputs:** `.agents/specs/<feature>/requirements.md`, `.agents/specs/<feature>/research.md` (if exists), `.agents/specs/<feature>/gap-analysis.md` (if exists)
