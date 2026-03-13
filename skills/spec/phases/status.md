@@ -31,61 +31,98 @@ Also check global state:
 
 ### 3. Generate Report
 
-Present a structured status report:
+The report should feel like a dashboard — scannable at a glance, with visual cues that draw attention to what matters. Use rendered markdown (not code blocks) so the user gets proper formatting.
 
+#### Multi-spec overview (when no feature is specified)
+
+If reporting on multiple specs, lead with a summary table sorted by most recently updated:
+
+```markdown
+## All Specs
+
+| Feature | Phase | Progress | Next Action |
+|---------|-------|----------|-------------|
+| **user-notifications** | `tasks-generated` | 2/5 done | `/spec impl user-notifications` |
+| **csv-export** | `design-generated` | — | Review and approve design |
+| **auth-refresh** | `initialized` | — | `/spec requirements auth-refresh` |
 ```
-## Spec: <feature-slug>
 
-Description: <description>
-Phase: <phase>
-Created: <date>  |  Updated: <date>
+Then show the detailed report for each spec below.
 
+#### Single-spec report
+
+Use this structure. Render as real markdown — not inside code fences.
+
+**Header block** — feature name as heading, key metadata on one line:
+
+```markdown
+## user-notifications
+
+> Online notification system for user activity alerts
+
+**Phase:** `tasks-generated`  \|  **Created:** 2026-02-10  \|  **Updated:** 2026-03-12
+```
+
+**Approval pipeline** — use checkmarks and crosses for instant scanning:
+
+```markdown
 ### Approvals
 
 | Stage | Generated | Approved |
-|-------|-----------|----------|
-| Requirements | yes/no | yes/no |
-| Design | yes/no | yes/no |
-| Tasks | yes/no | yes/no |
+|-------|:---------:|:--------:|
+| Requirements | :white_check_mark: | :white_check_mark: |
+| Design | :white_check_mark: | :white_check_mark: |
+| Tasks | :white_check_mark: | :x: |
+```
 
+**Task breakdown** — status indicators make each row scannable without reading the status column:
+
+```markdown
 ### Tasks
 
-| # | Task | Size | Depends | Requirements | Status |
-|---|------|------|---------|-------------|--------|
-| 01 | <title> | S | — | 1.1 | done |
-| 02 | <title> | M | 01 | 1.2, 2.1 | in-progress |
-| 03 | <title> | M | 01, 02 | 2.2 | pending |
+| # | Task | Size | Depends | Reqs | Status |
+|--:|------|:----:|---------|------|--------|
+| 01 | Create notification model | S | — | 1.1 | :white_check_mark: done |
+| 02 | Add WebSocket channel | M | 01 | 1.2, 2.1 | :arrows_counterclockwise: in-progress |
+| 03 | Build notification feed UI | M | 01, 02 | 2.2 | :hourglass_flowing_sand: pending |
+| 04 | Implement read/unread toggle | S | 03 | 2.3 | :hourglass_flowing_sand: pending |
+| 05 | Add email fallback | M | 01 | 3.1 | :no_entry_sign: blocked |
 
-Summary: N done, M in-progress, P pending (of T total)
-
-### Next Eligible Task
-
-Task NN: <title>
-  Dependencies: all met
-  Size: S/M
+**Progress: 1/5 done** · 1 in-progress · 2 pending · 1 blocked
 ```
 
-If reporting on multiple specs, show a summary table first:
+**Next eligible task** — highlight what the user can act on right now:
 
+```markdown
+### Next Up
+
+> **Task 03 — Build notification feed UI**
+> Size: M · Dependencies: all met
 ```
-| Feature | Phase | Tasks | Next Action |
-|---------|-------|-------|------------|
-| user-notifications | tasks-generated | 0/5 done | Review and approve tasks |
-| csv-export | design-generated | — | Review and approve design |
-```
+
+If no task is eligible (all remaining tasks are blocked), say so and explain what's blocking.
 
 ### 4. Identify Patterns
 
-Look for potential issues:
-- Tasks stuck in `in-progress` (check git log for last related commit)
-- Missing approvals that are blocking progress
-- Specs that were initialized but never advanced
+Scan for issues that might not be obvious from the raw data:
+- Tasks stuck in `in-progress` — check git log for last related commit and report staleness
+- Missing approvals blocking forward progress
+- Specs initialized but never advanced past `initialized`
 
-Report any findings.
+Report findings as a warnings section when issues exist:
+
+```markdown
+### Warnings
+
+- Task 02 has been `in-progress` with no related commits for 5 days
+- Design approval is missing — blocking task generation
+```
+
+Omit this section entirely if there are no issues. Don't report "no warnings found."
 
 ### 5. Suggest Next Actions
 
-Based on the current state, suggest the appropriate next command:
+End the report with a clear, actionable next step based on current state:
 
 | State | Suggestion |
 |-------|-----------|
@@ -99,14 +136,24 @@ Based on the current state, suggest the appropriate next command:
 | All tasks done | Feature complete — consider cleanup |
 | `in-progress` tasks exist | `/spec impl <feature>` to continue |
 
+Present the suggestion as a direct recommendation, not just a table lookup:
+
+```markdown
+### Suggested Next Step
+
+Tasks are approved with 1 task in-progress. Continue implementation:
+`/spec impl user-notifications`
+```
+
 ### 6. Branch Context
 
-If a branch is set in spec.json, or the current git branch appears related to the feature:
+If a branch is set in spec.json, or the current git branch appears related to the feature, append branch info:
 
-```
-Branch: <branch-name>
-  Commits since main: N
-  Latest: <commit message>
+```markdown
+### Branch
+
+**`feat/user-notifications`** · 12 commits ahead of main
+Latest: `feat(notifications): task 02 - add WebSocket channel`
 ```
 
 ## Rules
@@ -116,3 +163,5 @@ Branch: <branch-name>
 - If spec.json is malformed or missing fields, report the issue and suggest manual inspection
 - Show task dependencies so the user can understand what's blocking
 - When reporting on all specs, sort by most recently updated
+- Render the report as real markdown — never wrap the entire output in a code fence
+- Omit sections that have no content (e.g., skip Warnings if there are none, skip Branch if no branch context exists)
