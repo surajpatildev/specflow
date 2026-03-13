@@ -41,7 +41,25 @@ Tasks cover coding, testing, and documentation that lives in the repo. When a fe
 
 Skip the documentation task when the feature is purely internal with no user-visible surface, or when the project has no existing documentation to update.
 
-### 6. Parallel Analysis
+### 6. Implementation Detail in How
+
+The How section is the user's last checkpoint before implementation begins. It needs to be specific enough that a reviewer can evaluate the approach without reading the code — vague plans lead to surprises during implementation.
+
+For **M and L tasks**:
+- Numbered steps describing what happens in order
+- Key interfaces from design.md (function signatures, type definitions, API contracts)
+- Which existing patterns to follow and where to find examples in the codebase
+- Specific test scenarios with expected behavior
+
+For **S tasks**:
+- A brief approach is sufficient — "Follow the same pattern as the existing X service"
+
+The test: can someone reading the How section understand what code will be written and why? If not, it needs more detail.
+
+- **Good How:** "1. Create the `UserPreference` model following the existing `UserProfile` pattern. 2. Add a repository with `get_by_user_id()` and `upsert()` — interface matches the `ProfileRepository` contract from design.md. 3. Write tests: preference creation, retrieval for existing user, upsert overwrites."
+- **Bad How:** "Create the data access layer for preferences."
+
+### 7. Parallel Analysis
 Mark tasks that can run concurrently with `[P]` in the task list. Two tasks are parallel
 only when they share no data dependencies, modify no common files, and do not depend on
 each other's runtime output.
@@ -65,10 +83,13 @@ Each task file uses the template at `templates/task.md`:
 <Natural language description — behavior, inputs, outputs, user-visible effects.>
 
 ## How
-<Technical approach — patterns to follow, code to extend, interfaces to implement.>
+<Step-by-step implementation approach with key interfaces from design.md.>
 
 ## Files
-<List of files to create or modify.>
+<Files to create or modify, each with a brief description of what changes.>
+
+## Tests
+<Specific test scenarios that verify the acceptance criteria.>
 
 ## Acceptance
 <Concrete, verifiable checks. Include "project check command passes clean" as a standard item.>

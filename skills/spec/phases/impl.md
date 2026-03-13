@@ -34,11 +34,13 @@ If the user specified multiple task numbers, validate that their dependency orde
 
 Read the task file, then set its status to `in-progress`. If this is the first task being implemented (phase is still `tasks-generated`), update spec.json: set `phase` to `"in-progress"`. Follow the task's How section step by step:
 
-- Create or modify files as specified
+- Implement each numbered step in the How section in order
+- Match the key interfaces defined in How — these were approved by the user during task review
+- Create or modify the files listed in the Files section
 - Follow the project's architecture patterns (per tech-stack.md and CLAUDE.md/AGENTS.md if available, otherwise infer from existing code)
 - Read existing files before modifying them to match surrounding code style
 - Handle error cases as specified in the design
-- Write tests that verify the acceptance criteria covered by this task
+- Write the tests listed in the Tests section, verifying each acceptance criterion
 
 ### 3. Verify
 
@@ -52,10 +54,11 @@ Run the project's verification commands (from tech-stack.md, CLAUDE.md, or disco
 
 Walk through the task's Acceptance criteria. For each item, note evidence (e.g., "check command passed", "N tests green"). Also verify:
 
+- Implementation matches the interfaces defined in the task's How section
+- All tests from the Tests section are written and passing
 - Code follows CLAUDE.md / AGENTS.md conventions (if they exist) and matches surrounding code style
 - No hardcoded values, debug code, commented-out code, or orphan TODOs
 - Error handling matches project patterns
-- New code has appropriate test coverage
 
 If any item fails, fix and re-verify.
 

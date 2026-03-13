@@ -9,6 +9,8 @@ Load these files in addition to the shared context from SKILL.md:
 - `.agents/specs/<feature>/requirements.md` — approved requirements
 - `.agents/specs/<feature>/spec.json` — current state
 - `.agents/reference/tech-stack.md` (if exists) — architecture and directory structure
+- `rules/discovery.md` — research process and tool guidance
+- `templates/gap-analysis.md` — output template
 
 ## Procedure
 

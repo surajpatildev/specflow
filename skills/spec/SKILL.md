@@ -22,7 +22,9 @@ Structured planning and implementation workflow for features that benefit from d
 
 ## Routing
 
-All file paths in this skill are relative to this skill's root directory (the directory containing this SKILL.md).
+This skill uses two kinds of file paths:
+- **Skill paths** (`phases/`, `rules/`, `templates/`) — relative to this skill's root directory (the directory containing this SKILL.md)
+- **Project paths** (`.agents/`, `CLAUDE.md`, etc.) — relative to the user's project working directory
 
 Parse the first argument to determine the subcommand:
 

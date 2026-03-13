@@ -87,9 +87,10 @@ Each task file follows the template at `templates/task.md`. Key sections:
 
 - **Title** — Short, action-oriented (e.g., "Create user notification model")
 - **What** — Capabilities in natural language, no code details
-- **How** — Implementation approach, referencing existing patterns by name
-- **Files** — Explicit paths with create/modify annotations
-- **Acceptance** — Observable, verifiable criteria (include "check command passes" as a standard item)
+- **How** — Step-by-step implementation approach. Include numbered steps, key interfaces from design.md (function signatures, type definitions), and which existing patterns to follow. This is the user's last review point before code is written — it needs enough detail to evaluate the approach. See `rules/task-generation.md` principle 6 for guidance and examples.
+- **Files** — Explicit paths with create/modify annotations and a brief description of what each file does or what changes
+- **Tests** — Specific test scenarios that verify the acceptance criteria. Name each test and describe expected behavior.
+- **Acceptance** — Observable, verifiable criteria (include "check command passes" and "all tests in Tests section pass" as standard items)
 - **Notes** — Empty; filled during implementation
 
 ### 6. Validate Coverage
